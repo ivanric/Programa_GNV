@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<mvc:annotation-driven />
+
+	<!-- Configure to plugin JSON as request and response in method handler -->
+    <beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <beans:property name="messageConverters">
+            <beans:list>
+                <beans:ref bean="jsonMessageConverter"/>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+     
+    <!-- Configure bean to convert JSON to POJO and vice versa -->
+    <beans:bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+    </beans:bean> 
+
+<!-- 	RESOLVIENDO VISTAS -->
+	<bean  id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer" p:resourceLoaderPath="/" />
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.velocity.VelocityView" />
+		<property name="contentType" value="text/html;charset=ISO-8859-1" />
+		<property name="cache" value="true" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".html" />
+<!-- 		<beans:property name="suffix" value="/" /> -->
+	</bean>
+
+<!-- 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"> -->
+<!-- 		<property name="order" value="1"/> -->
+<!-- 		<property name="mediaTypes"> -->
+<!-- 			<map> -->
+<!-- 				<entry key="html" value="text/html" /> -->
+<!-- 				<entry key="json" value="application/json" /> -->
+<!-- 			</map> -->
+<!-- 		</property> -->
+<!-- 		<property name="defaultViews"> -->
+<!-- 			<list> -->
+<!-- 				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" /> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+<!-- 	<beans:bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver"> -->
+<!-- 		<beans:property name="order" value="1" /> -->
+<!-- 		<beans:property name="prefix" value="/WEB-INF/views/" /> -->
+<!-- 		<beans:property name="suffix" value=".html" /> -->
+<!-- 		<beans:property name="templateMode" value="HTML5" /> -->
+<!-- 	</beans:bean> -->
+	
+<!-- 	<beans:bean  id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine"> -->
+<!-- 		<beans:property name="templateResolver" ref="templateResolver"/> -->
+<!-- 	</beans:bean> -->
+	
+<!-- 	<beans:bean  class="org.thymeleaf.spring4.view.ThymeleafViewResolver"> -->
+<!-- 		<beans:property name="templateEngine" ref="templateEngine"/> -->
+<!-- 	</beans:bean> -->
+	
+	
+	<!-- 	CONFIGURACION DE MUSTACHE BEANS -->
+<!-- 	<beans:bean id="mustacheTemplateLoader" class="com.github.mjeanroy.springmvc.view.mustache.configuration.MustacheTemplateLoaderFactoryBean" /> -->
+<!-- 	<beans:bean id="mustacheCompiler" class="com.github.mjeanroy.springmvc.view.mustache.configuration.MustacheCompilerFactoryBean" /> -->
+	
+	<!--	 RESOLVIENDO VISTAS -->
+<!-- 	<beans:bean class="com.github.mjeanroy.springmvc.view.mustache.MustacheViewResolver"> -->
+<!-- 	    <beans:constructor-arg ref="mustacheCompiler" /> -->
+<!-- 	    <beans:property name="order" value="1" /> -->
+<!-- 	    <beans:property name="defaultLayout" value="layout" /> -->
+<!-- 	    <beans:property name="prefix" value="/WEB-INF/views/" /> -->
+<!-- 	    <beans:property name="suffix" value=".html" /> -->
+<!-- 	</beans:bean> -->
+	
+	
+	
+	
+	<!-- 	ESPECIFICANDO LOS RECURSOS CSS,JS,IMAGENES -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<!-- Tell the container that we are going to use annotations -->
+  	<context:annotation-config />
+	
+	<!-- 	ESPECIFICANDO LAS ANOTACIONES -->
+<!-- 	<mvc:annotation-driven/> -->
+<!-- 	<mvc:resources mapping="/webjars/**" location="/webjars/"/> -->
+	
+	
+	<!-- 	ESPECIFICANDO LOS PAQUETES -->
+	<context:component-scan base-package="controller" />
+	<context:component-scan base-package="manager" />
+	<context:component-scan base-package="models" />
+	
+	<!-- 	ESPECIFICANDO TRAFICO DE ARCHIVOS -->
+<!-- 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> </beans:bean> -->
+	
+	<!-- 	IMPORTANDO EL LA BD.XML  -->
+	<beans:import resource="bd.xml"/>
+</beans>
+	

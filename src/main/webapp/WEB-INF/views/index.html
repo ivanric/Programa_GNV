@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content=""> 
+	<title>index</title>
+	<link rel="stylesheet" href="../resources/bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="../resources/bower_components/animate.css/animate.css">
+	<link rel="stylesheet" href="../resources/css/styles.css">
+	<link rel="stylesheet" href="../resources/css/tema/app.min.1.css">
+	<link rel="stylesheet" href="../resources/css/tema/app.min.2.css">
+	<link rel="stylesheet" href="../resources/bower_components/Waves/dist/waves.css">
+	<link rel="stylesheet" href="../resources/bower_components/animate.css/animate.css">
+	<link rel="stylesheet" href="../resources/bower_components/form.validation/dist/css/formValidation.css">
+	<link rel="stylesheet" href="../resources/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.css">	
+	<link rel="stylesheet" href="../resources/css/btn-flotant.css">
+
+</head>
+<body>
+	<!-- MENú -->
+	<nav class="navbar navbar-inverse  navbar-static-top">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span> <span
+				class="icon-bar"></span> <span class="icon-bar"></span> <span
+				class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">Logo</a>
+			</div>
+
+	<!-- 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+					<li><a href="#">Link</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li role="presentation" class="dropdown "><a
+						class="dropdown-toggle" data-toggle="dropdown" href="#"
+						role="button" aria-expanded="false"> Ingresar<span
+						class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Registrarse</a></li>
+						<li><a href="#">Logueo</a></li>
+					</ul></li>
+				</ul>
+			</div> -->
+		</div>
+	</nav>
+	<div class="row" style="margin-right: 0px;">
+	<div class="col-lg-4 col-md-4 col-xs-12"></div>
+	<div class="col-lg-4 col-md-4 col-xs-12" style="padding: 0px 30px;">
+	<div class="row text-center">
+		<div class="col-lg-12 col-md-12 col-xs-12 ">
+			<!-- <img src="" class="img-circle"> -->
+			<i class="zmdi zmdi-account zmdi-hc-5x img-circle" style="background: #858988;width: 80px;height: 80px;"></i>	
+		</div>
+	</div>
+	<form action="../usuario/validar" method="post" id="form-logueo" class="form-logueo" novalidate>
+		<div class="modal-header text-center">		
+			<h4 class="modal-title">Conexión al Sistema</h4>
+		</div>
+	<p class="lock">
+		<i class="icon_lock_alt" style="color: rgb(66, 180, 180);"></i>
+	</p>
+	<div class="modal-body">
+		<div class="form-group">
+			<div class="input-group m-b-20">
+	         <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+	            <div class="fg-line">
+	                <input type="text" class="form-control" id="xlogin" placeholder="Usuario.." name="xlogin">
+	            </div>
+	        </div>
+			<!-- <label for="" class="control-label">Usuario</label>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="icon_profile"></i>
+				</span> 
+				<input type="text" class="form-control" id="xlogin"
+				placeholder="Usuario.." name="xlogin">
+			</div> -->
+		</div>
+		<div class="form-group">
+			<div class="input-group m-b-20">
+	            <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+	            <div class="fg-line">
+	                <input type="password" class="form-control" id="xpassword" placeholder="Contraseña.." name="xpassword">
+	            </div>
+	        </div>
+			<!-- <label for="exampleInputPassword1" class="control-label">Constraseña</label>
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="icon_key_alt"></i>
+				</span> 
+				<input type="password" class="form-control" id="xpassword"
+				placeholder="Password.." name="xpassword">
+			</div> -->
+		</div>
+		<div id="mensaje"></div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-12 text-center">
+			<button type="submit" class="btn btn-success waves-effect" id="btn-log"><span class="fa fa-external-link" ></span> aceptar</button>
+			<button type="button" class="btn btn-danger waves-effect" id="resetear"> <span class="fa fa-remove"></span>Resetear</button>			
+		</div>
+
+	</div>
+</form>
+
+</div>
+<div class="col-lg-4 col-md-4 col-xs-12"></div>
+
+</div>
+
+
+<button class="btn btn-default waves-effect" >Default</button>
+<button class="btn btn-info waves-effect" >Info</button>
+<button class="btn btn-primary waves-effect">Primary</button>
+<button class="btn btn-success waves-effect">Success</button>
+<button class="btn btn-warning btn-xs waves-effect">Warning</button>
+<button class="btn btn-danger waves-effect">Danger</button>
+
+
+
+<div class="fixed-action-btn" style="bottom: 25px;right:19px;">
+	<a class="btn-floating btn-large">
+	<i class="zmdi zmdi-plus-circle-o zmdi-hc-2x" style="margin: 10px -6px"></i>
+	</a>
+	<ul>
+		<li><a href="css-helpers.html" class="btn-floating btn-danger" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class="zmdi zmdi-help zmdi-hc-fw"></i></a></li>
+		<li><a href="app-widget.html" class="btn-floating btn-success" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=""></i></a></li>
+		<li><a href="app-calendar.html" class="btn-floating btn-warning" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=""></i></a></li>
+		<li><a href="app-email.html" class="btn-floating btn-info" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=""></i></a></li>
+	</ul>
+</div>
+
+<!-- <p class="" style="text-align: center;">$Hello</p> -->
+
+
+<script type="" src="../resources/bower_components/jquery/dist/jquery.js"></script>
+<script type="" src="../resources/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script type="" src="../resources/bower_components/jquery.nicescroll/dist/jquery.nicescroll.js"></script>
+<script type="" src="../resources/bower_components/autosize/dist/autosize.js"></script>
+<script type="" src="../resources/bower_components/Waves/dist/waves.js"></script>
+<!-- <script type="" src="../resources/js/Waves/dist/waves.min.js"></script> -->
+<!-- <script type="" src="../resources/js/script.js"></script> -->
+<script type="" src="../resources/js/materialize/materialize.js"></script>
+<script type="" src="../resources/bower_components/jquery-form/dist/jquery.form.min.js"></script>
+<script type="" src="../resources/bower_components/form.validation/dist/js/formValidation.js"></script>
+<script type="" src="../resources/bower_components/form.validation/dist/js/framework/bootstrap.js"></script>
+<script type="" src="../resources/bower_components/form.validation/dist/js/language/es_ES.js"></script>
+<script type="" src="../resources/js/tema/js/functions.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		var form=$('#form-logueo')
+		.formValidation({
+			framework: 'bootstrap',
+			icon: {
+				valid: 'glyphicon glyphicon-ok',
+				invalid: 'glyphicon glyphicon-remove',
+				validating: 'glyphicon glyphicon-refresh'
+			},
+			fields: {
+				xlogin: {
+					message: 'The username is not valid',
+					validators: {
+						notEmpty: {
+							message: 'ingrese un usuario'
+						},
+						stringLength: {
+							min: 4,
+							max: 20,
+							message: 'El login deve ser 4 caracteres y menor que 20 caracteres'
+						},
+						regexp: {
+							regexp: /^[a-zA-Z0-9_\.]+$/,
+							message: 'El login no acepta caracteres especiales'
+						}
+					}
+				},
+				xpassword: {
+					validators: {
+						notEmpty: {
+							message: 'Requiere una clave'
+						}
+					}
+				}
+			}
+		}).on('success.form.fv', function(e){
+			e.preventDefault();
+				     // alert('estoy dentro')
+		    IngresoLogin();
+		})
+		function IngresoLogin(){
+
+			$('#form-logueo').ajaxSubmit({
+				dataType:"json",
+				success:function(respuesta){
+						console.log(respuesta);
+// 						alert(respuesta)
+						// alert(respuesta.status)
+						if(respuesta.status==true){
+// 						if(respuesta=='true'){
+							$('#mensaje').html(respuesta.msg);
+							// mostrarMensaje('info','Satisfaccion correcta');
+// 							alert('redireccionando a inicio');
+							window.location.href='../principal/inicio';
+						}else{
+							$('#mensaje').html(respuesta.msg);
+							// mostrarMensaje('error','Sin acceso al sistema');
+						}	
+				},
+				error:function(e){
+					alert('sin respuesta del servidor');
+				}
+			});
+		}
+		$('#resetear').on('click',function(){
+			$('#form-logueo').data('formValidation').resetForm(true);
+			$('#mensaje').html('');
+		})
+		
+		
+		// $(function(){
+			Waves.attach('.btn',['waves-button']);
+			Waves.init();
+		// })
+		$("html").niceScroll();
+	});
+</script>
+</body>
+</html>

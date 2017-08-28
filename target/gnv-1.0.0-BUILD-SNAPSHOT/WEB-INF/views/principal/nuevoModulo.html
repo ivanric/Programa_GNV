@@ -1,0 +1,22 @@
+<ul class="nav" id="side-menu">
+	#foreach($reg in $xmenus)
+	<li>
+		<a href="#">
+			<i class="${reg.getIcono()}"></i>
+			<span class="" style="padding-left:15px;">${reg.getNombre()}</span>
+			<i class="fa arrow"></i>
+		</a>
+		<ul class="nav nav-second-level">
+			#foreach($proc in $reg.getProcesos())
+			<li style="background:#0a046f;">
+				<a href="panels-wells.html">${proc.getNombre()}</a>
+			</li>
+			#end	
+		</ul>
+		<!-- /.nav-second-level -->
+	</li>
+	#end
+</ul>
+ <script type="" src="../resources/js/ajax/gestion.js"></script>
+ <!-- <script type="" src="../resources/bower_components/jquery/dist/jquery.js"></script> -->
+ <!-- <script type="" src="../resources/js/tema/menu/metisMenu.js"></script> -->
