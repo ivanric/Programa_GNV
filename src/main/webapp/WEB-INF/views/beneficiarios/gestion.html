@@ -1,221 +1,467 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content=""> 
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>gestion</title>
 </head>
 <body>
-	
+
 	<!-- <h2 style="text-align: center;">GESTION BENEFICIARIOS</h2> -->
-    <div class="card z-depth-2">
-     	<div class="card-header">
-    		<h2 class="panel-title">GESTION BENEFICIARIOS
-    			<small>Administre beneficiarios registrados en el Sistema</small>
-    		</h2>
-  		</div>	
-	  <div class="panel-body table-responsive">
-	    <div class="">
-            <div class="col-md-12">
-                <button id="btn-add" class="navbar-right btn btn-default waves-effect" disabled="disabled">
-                    Agregar BENEFICIARIO 
-                </button>
-            </div>   &nbsp;
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-3 col-xs-12">
-                        <input type="text"  id="filt-ben" name="" class="form-control unput-sm" placeholder="Buscar por nombres, apellidos o cedula..">
-                    </div>
-                    <div class="col-md-3 col-xs-12">
-                    	
-                    </div>
-                    <div class="col-md-6 col-xs-12" style="text-align: right;">
-	                	<label class="radio radio-inline m-r-20">
-							<input type="radio" name="iestado" id="activos" value="1">
-                        	<i class="input-helper"></i>activos
-						</label>
-						<label class="radio radio-inline m-r-20">
-							<input type="radio" name="iestado" id="bajas" value="0"> 
-                        	<i class="input-helper"></i>bajas
-						</label>
-						<label class="radio radio-inline m-r-20">
-							<input type="radio" name="iestado" id="todos" value="-1" checked="checked"> 
-                        	<i class="input-helper"></i>todos
-						</label>	
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-        	    <table  id="table-beneficiarios" class="table table-vmiddle" width="100%" >
-                    <thead>
-                        <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">beneficiario</th>
-                            <th class="text-center">ci</th>
-                            <th class="text-center">direccion</th>
-                            <th class="text-center">E</th>
-                            <th class="text-center">Opciones</th>
-                           
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-            	</table>
-            </div>   
-        </div>  
-	  </div>
+	<div class="card z-depth-2">
+		<div class="card-header">
+			<h2 class="panel-title">
+				GESTIONó BENEFICIARIOS <small>Administre beneficiarios
+					registrados en el Sistema</small>
+			</h2>
+		</div>
+		<div class="panel-body table-responsive" style="margin-top: -30px">
+			<div class="">
+				
+				<div class="col-md-12 navbar-right" style="text-align: right;margin-bottom: 15px">			
+					<button id="btn-add" class="btn btn-default waves-effect" disabled="disabled">NUEVO BENEFICIARIO</button>
+				</div>
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-3 col-xs-12" style="margin-bottom: 10px;">
+							<input type="text" id="filt-ben" name=""
+								class="form-control_filtro unput-sm"
+								placeholder=" Buscar Apellidos nombres o cedula..">
+						</div>
+						<div class="col-md-3 col-xs-12"></div>
+						<div class="col-md-6 col-xs-12 navbar-right" style="text-align: right; margin-top: 10px">
+							<label class="radio radio-inline m-r-20"> <input
+								type="radio" name="iestado" id="activos" value="1"> <i
+								class="input-helper"></i>activos
+							</label> <label class="radio radio-inline m-r-20"> <input
+								type="radio" name="iestado" id="bajas" value="0"> <i
+								class="input-helper"></i>bajas
+							</label> <label class="radio radio-inline m-r-20"> <input
+								type="radio" name="iestado" id="todos" value="-1"
+								checked="checked"> <i class="input-helper"></i>todos
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<table id="table-beneficiarios" class="table table-vmiddle"
+						width="100%">
+						<thead>
+							<tr>
+								<th class="text-center">#</th>
+								<th class="text-center">beneficiario</th>
+								<th class="text-center">ci</th>
+								<th class="text-center">direccion</th>
+								<th class="text-center">Estado</th>
+								<th class="text-center">Opciones</th>
+
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div>
-	 <!-- <script type="" src="../resources/js/ajax/gestion.js"></script> -->
+	
 	<script type="text/javascript">
-	    $('select').chosen();
+        var result=Get_Opciones(null);
+        // console.log('GESTION_LIST: ',result)
+        // console.log('tam: ',result.AccionesUser.length)
+        if(ExisteOpcion('adicionar')){
+            $('#btn-add').attr({
+                onclick:"(Beneficiario.add())",
+                // accesskey:""
+                })
+            $('#btn-add').removeAttr("disabled ").focus().val("Ahora si lo puedes utilizar")
+        }
 
-	// $(function () {
-		var result=Get_Opciones(null);
-		// console.log('GESTION_LIST: ',result)
-		// console.log('tam: ',result.AccionesUser.length)
-		if(ExisteOpcion('adicionar')){
-			$('#btn-add').attr({
-				onclick:"(Beneficiario.add())",
-				// accesskey:""
-				})
-			$('#btn-add').removeAttr("disabled ").focus().val("Ahora si lo puedes utilizar")
-		}
+        function ExisteOpcion(opc){
+            // alert('entro comparar')
+            var resultado=false;
+            for (var i = 0; i < result.AccionesUser.length; i++) {
+                console.log('for_: ',result.AccionesUser[i]);
+                if(result.AccionesUser[i].codigo==opc){
+                    resultado=true;         
+                }
+            }
+            // console.log('result_dentro:',resultado)              
+            return resultado;
+        }
 
-		function ExisteOpcion(opc){
-			// alert('entro comparar')
-			var resultado=false;
-			for (var i = 0; i < result.AccionesUser.length; i++) {
-				console.log('for_: ',result.AccionesUser[i]);
-				if(result.AccionesUser[i]==opc){
-					resultado=true;			
-				}
-			}
-			// console.log('result_dentro:',resultado)				
-			return resultado;
-		}
+        var filtro=$('#filt-ben').val();
+        var estado=$('input[name="iestado"]:checked').val();
+        listar();
 
-		var filtro=$('#filt-ben').val();
-		var estado=$('input[name="iestado"]:checked').val();
-		listar();
+        $('#filt-ben').on('keyup',function(){
+            filtro=$(this).val();
+            listar();
+        })
 
-		$('#filt-ben').on('keyup',function(){
-			filtro=$(this).val();
-			listar();
-		})
+        $('input[name="iestado"]').on('change',function(){
+            estado=$(this).val();
+            listar();
+        })
+        var DTBeneficiario='';
+        function listar(){
+            $.ajax({
+                url:'../RestBeneficiarios/listar',
+                type:'post',
+                dataType:'json',
+                data:{
+                    filtro:filtro,
+                    estado:estado,
+                },
+                success:function(resp){
+                    console.log('icont_')
+                    if ($.fn.DataTable.isDataTable('#table-beneficiarios')) {
+                        DTBeneficiario.destroy();
+                        iniciarDatable(resp);       
+                    } else {
+                        iniciarDatable(resp);
+                    }   
+                },
+                error:function(err){
+                    alert('sin respuesta del servidor')
+                }
+            })
+        }
+      
+        function iniciarDatable(lista){
+            console.log('respuestaAjax: ',lista);
+            DTBeneficiario=$('#table-beneficiarios').DataTable({
+                "oLanguage": {
+                    "sUrl": "../resources/js/dataTables/Spanish.lang"
+                },
+                // responsive:true,
+                "dom":'rt<button>ip',
+                // "ordering":false,
+                "pageLength":5,
+                data:lista,
+                columns:[
+                    {data:'ci'},
+                    {data:'ci'},
+                    {data:'ci'},
+                    {data:'ci'},
+                    {data:'estado'},
+                    {data:'ci'},
+                ]
+                ,
+                "createdRow":function(row,data,index){
+                    $('td',row).eq(0).html(index+1).addClass('text-center');
+                    $('td',row).eq(1).html(data.ap+' '+data.am+' '+data.nombres).addClass('text-center')
+                    $('td',row).eq(2).html(data.ci).addClass('text-center')
+                    $('td',row).eq(3).html(data.direccion).addClass('text-center')
+                    if(data.beneficiario.estado==1){
+                        $('td',row).eq(4).html('<a type="button" class="" href="#" style="text-align:center"><i class="fa fa-thumbs-o-up"></i></a>').addClass('text-center').addClass('text-center');
+                    }else{
+                        $('td',row).eq(4).html('<a type="button" class="" href="#" style="text-align:center"><i class="fa fa-thumbs-o-down"></i></a>').addClass('text-center').addClass('text-center');
+                    }
+                    if(ExisteOpcion('modificar')){
+                        $('td',row).eq(5).html('<button id="btn-mod" class="btn btn-info btn-sm waves-effect btn-espacio" accesskey="'+data.beneficiario.idben+'" data-href="'+data.beneficiario.idper+'" onclick="(Beneficiario.mod(this))"><span class="zmdi zmdi-edit"></span> Modificar</button>')
+                        // $('td',row).eq(5).append('<button>hola</button>')
+                    }else{
+                        $('td',row).eq(5).html('<button id="btn-mod" class="btn btn-info btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-edit"></span> Modificar</button>') 
+                    }
+                    if(data.beneficiario.estado==1){
+                        if(ExisteOpcion('eliminar')  ){
+                            // if()
+                            $('td',row).eq(5).append('<button id="btn-elim" class="btn btn-danger btn-sm waves-effect btn-espacio" accesskey="'+data.beneficiario.idben+'" data-href="'+data.beneficiario.idper+'" onclick="(Beneficiario.elim(this))"><span class="zmdi zmdi-delete"></span> Eliminar</button>');
+                        }else{
+                            $('td',row).eq(5).append('<button id="btn-elim" class="btn btn-danger btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-delete"></span> Eliminar</button>');  
+                        }
+                    }else{
+                        if(ExisteOpcion('habilitar')){
+                            $('td',row).eq(5).append('<button id="btn-hab" class="btn btn-success btn-sm waves-effect btn-espacio" accesskey="'+data.beneficiario.idben+'" data-href="'+data.beneficiario.idper+'" onclick="(Beneficiario.hab(this))"><span class="zmdi zmdi-time-restore-setting"></span> Habilitar</button>');
+                        }else{
+                            $('td',row).eq(5).append('<button id="btn-hab" class="btn btn-success btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-time-restore-setting"></span> Habilitar</button>');   
+                        }                       
+                    }
 
-		$('input[name="iestado"]').on('change',function(){
-			estado=$(this).val();
-			listar();
-  		})
-	    var DTBeneficiario='';
-		function listar(){
-			$.ajax({
-				url:'../RestBeneficiarios/listar',
-				type:'post',
-				dataType:'json',
-				data:{
-					filtro:filtro,
-					estado:estado,
-				},
-				success:function(resp){
-					if ($.fn.DataTable.isDataTable('#table-beneficiarios')) {
-						DTBeneficiario.destroy();
-	           			iniciarDatable(resp);		
-					} else {
-						iniciarDatable(resp);
-					}	
-				},
-				error:function(err){
-					alert('sin respuesta del servidor')
-				}
-			})
-		}
-	  
-	    function iniciarDatable(lista){
-	    	console.log('respuestaAjax: ',lista);
-	        DTBeneficiario=$('#table-beneficiarios').DataTable({
-	            "oLanguage": {
-	                "sUrl": "../resources/js/dataTables/Spanish.lang"
-	            },
-	            "dom":'rt<button>ip',
-	            // "ordering":false,
-	            "pageLength":5,
-	            data:lista,
-	            columns:[
-	            	{data:'ci'},
-	            	{data:'ci'},
-	            	{data:'ci'},
-	            	{data:'ci'},
-	            	{data:'estado'},
-	            	{data:'ci'},
-	            ]
-	            ,
-	            "createdRow":function(row,data,index){
-					$('td',row).eq(0).html(index+1).addClass('text-center');
-					$('td',row).eq(1).html(data.ap+' '+data.am+' '+data.nombres).addClass('text-center')
-					$('td',row).eq(2).html(data.ci).addClass('text-center')
-					$('td',row).eq(3).html(data.direccion).addClass('text-center')
-					if(data.beneficiario.estado==1){
-						$('td',row).eq(4).html('<a type="button" class="" href="#" style="text-align:center"><i class="fa fa-thumbs-o-up"></i></a>').addClass('text-center').addClass('text-center');
-					}else{
-						$('td',row).eq(4).html('<a type="button" class="" href="#" style="text-align:center"><i class="fa fa-thumbs-o-down"></i></a>').addClass('text-center').addClass('text-center');
-					}
-					if(ExisteOpcion('modificar')){
-						$('td',row).eq(5).html('<button id="btn-mod" class="btn btn-info btn-sm waves-effect btn-espacio" accesskey="" onclick="(Beneficiario.mod(this))"><span class="zmdi zmdi-edit"></span> Modificar</button>')
-						// $('td',row).eq(5).append('<button>hola</button>')
-					}else{
-						$('td',row).eq(5).html('<button id="btn-mod" class="btn btn-info btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-edit"></span> Modificar</button>')	
-					}
-					if(data.beneficiario.estado==1){
-						if(ExisteOpcion('eliminar')  ){
-							// if()
-							$('td',row).eq(5).append('<button id="btn-elim" class="btn btn-danger btn-sm waves-effect btn-espacio" accesskey="" onclick="(Beneficiario.elim(this))"><span class="zmdi zmdi-delete"></span> Eliminar</button>');
-						}else{
-							$('td',row).eq(5).append('<button id="btn-elim" class="btn btn-danger btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-delete"></span> Eliminar</button>');	
-						}
-					}else{
-						if(ExisteOpcion('habilitar')){
-							$('td',row).eq(5).append('<button id="btn-hab" class="btn btn-success btn-sm waves-effect btn-espacio" accesskey="" onclick="(Beneficiario.hab(this))"><span class="zmdi zmdi-time-restore-setting"></span> Habilitar</button>');
-						}else{
-							$('td',row).eq(5).append('<button id="btn-hab" class="btn btn-success btn-sm waves-effect btn-espacio" disabled="disabled"><span class="zmdi zmdi-time-restore-setting"></span> Habilitar</button>');	
-						}						
-					}
+                }
+                ,
+                "fnDrawCallback":function(oSetttings){
+                    destruir(DTBeneficiario);
+                }
+            });
+        }
 
-	            }
-	        });
-	    }
-		
-		var Beneficiario={
-			add:function(){
-				console.log('adicionar')
-				$.ajax({
-					url:'../Beneficiarios/modal-add',
-					type:'post',
-					success:function(resp){
-						$('#cont-modales').html(resp);
-						$('#modal-add').modal('show')
+        function destruir(dt){
+            console.log('destroy')
+            dt.destroy();
+            DTBeneficiario=$('#table-beneficiarios').DataTable({
+                "oLanguage": {
+                    "sUrl": "../resources/js/dataTables/Spanish.lang"
+                },
+                "dom":'rt<button>ip',
+                "pageLength":5,
+                responsive:true
+            })
+        }
+            // $(function () {
+       
+        var Beneficiario={
+            add:function(){
+                // console.log('adicionar')
+                $.ajax({
+                    url:'../Beneficiarios/modal-add',
+                    type:'post',
+                    success:function(resp){
+                        $('#cont-modales').html(resp);
+                        $('#text-desc').val('')
+                        $('#select-genero').chosen()
+                        // $('#formulario-add').data('formValidation').resetForm(true);
+                        $('#modal-add').modal('show')
+                        var cont_doc=$('#cont_doc').val();
+                        $('#formulario-add').formValidation({
+                            fields:{
+                                'documentos[]': {
+                                    validators: {
+                                        choice: {
+                                            min: cont_doc,
+                                            max: cont_doc,
+                                            message: 'Seleccione todos los documentos '
+                                        }
+                                    }
+                                }
+                            }
+                        }).on('success.form.fv', function(e){
+                           e.preventDefault();
+                           Registrar();
+                        })
+                        function Registrar(){
+                            // $('#modal-add').modal('hide')
+                            swal({   
+                                title: "Seguro de registrar Beneficiario?",   
+                                text: "Usted registrara nuevo Beneficiario",   
+                                type: "warning",   
+                                showCancelButton: true,   
+                                confirmButtonColor: "#DD6B55",   
+                                confirmButtonText: "Si, Continuar!",   
+                                cancelButtonText: "No, Cancelar!",   
+                                closeOnConfirm: false,   
+                                closeOnCancel: false 
+                                }, function(isConfirm){   
+                                    if (isConfirm) {     
+                                        $('#formulario-add').ajaxSubmit({
+                                            success:function(res){
+                                                console.log('registrado',res)
+                                                if(res.estado){
+                                                    $.ajax({
+                                                        url:"../Beneficiarios/Gestion",
+                                                        success:function(gestion){
+                                                            $('#contenedor-gestion').html(gestion); 
+                                                            swal({
+                                                                title:"Registrado",
+                                                                text:"Se ha registrado beneficiario exitosamente",
+                                                                type:"success",
+                                                                timer: 2000,   
+                                                                showConfirmButton: false 
+                                                            });
+                                                            $('#modal-add').modal('hide')
+                                                        }
+                                                    })      
+                                                }
+                                            }
+                                        })
 
-					},	
-					error:function(err){
-						alert('sin respuesta del servidor')
-						location.href="../principal/index"
-					}
-				})
-			},
-			mod:function(a){
-				console.log('modificar')	
-			},
-			elim:function(a){
-				console.log('eliminar')	
-			},
-			hab:function(a){
-				console.log('habilitar')	
-			}
+                                    } else {     
+                                        // swal("Cancelled", "Your imaginary file is safe :)", "error");   
+                                        swal({
+                                            title:"Cancelado",
+                                            text:"Se ha cancelado operacion",
+                                            type:"error",
+                                            timer:2000,
+                                            showCancelButton:false,
+                                            showConfirmButton:false
 
-		}
-	// })
-	</script>
+                                        })
+                                        $('#modal-add').modal('hide')
+                                    } 
+                            });
+
+                        }
+                    },  
+                    error:function(err){
+                        alert('sin respuesta del servidor')
+                        location.href="../principal/index"
+                    }
+                })
+            },
+            mod:function(a){
+                var idben=$(a).attr('accesskey');
+                var idper=$(a).data('href');
+                // console.log('modificar--> idper:',idper,' idben:',idben)
+                $.ajax({
+                    url:'../Beneficiarios/modal-mod',
+                    type:'post',
+                    data:{
+                        idben:idben
+                    },
+                    // async:false,
+                    success:function(resp){
+//                         $('#cont-modales').html('');
+                        $('#cont-modales').html(resp);
+						//$('#text-desc').val('')
+                        // var m_cont_doc=0;
+                        $.post('../RestBeneficiarios/datos-mod',{idben:idben},function(resp){
+                                console.log('respuestaDatosModificarPost: ',resp)
+                                
+                                $('#text-desc').val('')
+                                // resetearFormulario('#formulario-mod');
+                                // $('#formulario-mod').data('formValidation').resetForm(true)
+                                $('#formulario-mod').find('.fg-line').addClass('fg-toggled'); 
+                                $('#formulario-mod').loadJSON(resp)
+                                $('#formulario-mod').find('input[name="institucion"]').val(resp.beneficiario.institucion);
+                                $('#formulario-mod').find('textarea[name="descripcion"]').val(resp.beneficiario.descripcion);
+                                //     var Documentos=resp.beneficiario.documentos;
+                                // $(Documentos).each(function(index,data){
+                                //     // $('#select-doc-mod').append('<option value="'+data.iddocb+'" selected="selected">'+data.nombre+'</option>');
+                                //     $('#m-ld').append('<div class="checkbox m-b-15">'+
+                                //             '<label>'+
+                                //                 '<input value="'+data.iddocb+'" type="checkbox" name="documentos[]"><i class="input-helper"></i>'+data.nombre+'</label>'+
+                                //             '</div>')
+                                //     m_cont_doc++;
+                                // })
+                                // $('#select-doc-mod').selectpicker({
+                                //   style: 'btn-default',
+                                //   size: 4//de cuanto en cuanto se mostrar
+                                // });
+                                $('#select-genero').chosen()
+                                $('#modal-mod').modal('show')
+                                // console.log('m_cont_doc',m_cont_doc)
+
+                        },'json')
+                        var m_cont_doc=$('#m_cont_doc').val();
+                        $('#formulario-mod').formValidation({  
+                        fields:{
+                                'documentos[]': {
+                                    validators: {
+                                        choice: {
+                                            min: m_cont_doc,
+                                            max: m_cont_doc,
+                                            message: 'Seleccione todos los documentos '
+                                        }
+                                    }
+                                }
+                            }                          
+                        }).on('success.form.fv', function(e){
+                           e.preventDefault();
+                           Modificar();
+                        })
+                        function Modificar(){
+                            swal({   
+                                title: "Seguro de modificar Beneficiario?",   
+                                text: "Usted modificara los datos del Beneficiario",   
+                                type: "warning",   
+                                showCancelButton: true,   
+                                confirmButtonColor: "#DD6B55",   
+                                confirmButtonText: "Si, Continuar!",   
+                                cancelButtonText: "No, Cancelar!",   
+                                closeOnConfirm: false,   
+                                closeOnCancel: false 
+                                }, function(isConfirm){   
+                                    if (isConfirm) {     
+                                        $('#formulario-mod').ajaxSubmit({
+                                            data:{
+                                            	idben:idben,
+                                            	idper:idper
+                                            },
+                                        	success:function(res){
+                                                console.log('modificado',res)
+                                                if(res.estado){
+                                                    $.ajax({
+                                                        url:"../Beneficiarios/Gestion",
+                                                        success:function(gestion){
+                                                            $('#contenedor-gestion').html(gestion); 
+                                                            swal({
+                                                                title:"Modificado",
+                                                                text:"Se ha modificado beneficiario exitosamente",
+                                                                type:"success",
+                                                                timer: 2000,   
+                                                                showConfirmButton: false 
+                                                            });
+                                                            $('#modal-mod').modal('hide')
+                                                        }
+                                                    })      
+                                                }
+                                            }
+                                        })
+
+                                    } else {     
+                                        // swal("Cancelled", "Your imaginary file is safe :)", "error");   
+                                        swal({
+                                            title:"Cancelado",
+                                            text:"Se ha cancelado operacion",
+                                            type:"error",
+                                            timer:2000,
+                                            showCancelButton:false,
+                                            showConfirmButton:false
+
+                                        })
+                                        $('#modal-mod').modal('hide')
+                                    } 
+                            });
+                        }
+
+                        // $.ajax({
+                        //     url:'../RestBeneficiarios/datos-mod',
+                        //     data:{
+                        //         idben:idben
+                        //     },
+                        //     dataType:'json',
+                        //     success:function(resp){
+                        //         console.log('respuestaDatosModificar: ',resp)
+                        //         // resetearFormulario('#formulario-mod');
+                        //         var Documentos=resp.beneficiario.documentos;
+                        //         $(Documentos).each(function(index,data){
+                        //             $('#select-doc-mod').append('<option value="'+data.iddocb+'">'+data.nombre+'</option>');
+                        //         })
+                        //         // $('#select-doc-mod').selectpicker({
+                        //         //   style: 'btn-default',
+                        //         //   size: 4//de cuanto en cuanto se mostrar
+                        //         // });
+                        //         $('#select-genero').chosen()
+                        //         $('#modal-mod').modal('show')
+                        //         $('#formulario-mod').formValidation({
+                        //         }).on('success.form.fv', function(e){
+                        //            e.preventDefault();
+                        //            Modificar();
+                        //         })
+                        //         function Modificar(){
+
+                        //         }
+                        //     },
+                        //     error:function(err){
+
+                        //     }
+
+                        // })
+
+                    },
+                    error:function(err){
+                        alert('sin respuesta del servidor')
+                    }
+                })    
+            },
+            elim:function(a){
+                console.log('eliminar') 
+            },
+            hab:function(a){
+                console.log('habilitar')    
+            }
+
+        }
+
+        function resetearFormulario(form){
+            $(form).data('formValidation').resetForm(true)
+        }   
+    // })
+        
+    </script>
 </body>
 </html>

@@ -1,179 +1,178 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content=""> 
-	<title></title>
-
-        <!-- <link rel="stylesheet" href="../resources/css/tema/css/app.min.1.css"> -->
-        <!-- <link rel="stylesheet" href="../resources/css/tema/css/app.min.2.css">       -->
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title></title>
 </head>
 <body>
-	<div class="modal fade" id="modal-add">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	    	<div class="card">
-                        <div class="card-header">
-                            <h2>Input Text <small>Text Inputs with different sizes by height and column.</small></h2>
+<form id="formulario-add" action="../RestBeneficiarios/adicionar" method="post" 
+    data-fv-excluded="disabled"
+    data-fv-icon-valid="glyphicon glyphicon-ok"
+    data-fv-icon-invalid="glyphicon glyphicon-remove"
+    data-fv-icon-validating="glyphicon glyphicon-refresh" >
+
+    <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="display: none;padding-left: 0">
+       <div class="modal-dialog modal-md" role="document">
+         <div class="modal-content">
+            <div class="card">
+                <div class="card-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h2>Adicionar Beneficiario<small>Complete el formulario por favor</small></h2>
+                </div>
+                <div class="modal-body">                      
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input" id="cedula" name="ci" type="text"  data-fv-notempty="true" data-fv-message="Requiere Cedula">
+                                </div>
+                                <label class="fg-label">Cédula</label>
+                            </div>
                         </div>
-                        
-                        <div class="card-body card-padding">
-                            <p class="c-black f-500">Basic Text Feilds with different sizes by height and column.</p>
-                            
-                            <div class="form-group">
-                                <div class="fg-line">
-                                    <input class="form-control input-sm" placeholder="Input Small" type="text">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <div class="fg-line">
-                                    <input class="form-control" placeholder="Input Default" type="text">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <div class="fg-line">
-                                    <input class="form-control input-lg" placeholder="Input Large" type="text">
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="fg-line">
-                                            <input class="form-control" placeholder="col-sm-4" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="fg-line">
-                                            <input class="form-control" placeholder="col-sm-4" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="fg-line">
-                                            <input class="form-control" placeholder="col-sm-4" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <div class="fg-line">
-                                            <input class="form-control" placeholder="col-sm-3" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <div class="fg-line">   
-                                            <input class="form-control" placeholder="col-sm-3" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <div class="fg-line">
-                                            <input class="form-control" placeholder="col-sm-3" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                        <div class="fg-line">
-                                            <input class="form-control" placeholder="col-sm-3" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="fg-line">
-                                            <input class="form-control" placeholder="col-sm-6" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="fg-line">
-                                            <input class="form-control" placeholder="col-sm-6" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <br>
-                            <p class="m-b-25 m-t-25 c-black f-500">Floating Label - Floating animation for label when Input feild is active.</p>
-                            
+                        <div class="col-md-6">
                             <div class="form-group fg-float">
                                 <div class="fg-line">
-                                    <input class="input-sm form-control fg-input" type="text">
+                                    <input class="form-control fg-input"  name="nombres" type="text" data-fv-notempty="true" data-fv-message="Requiere Nombres">
                                 </div>
-                                <label class="fg-label">Input Small</label>
+                                <label class="fg-label">Nombres</label>
                             </div>
-                            
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group fg-float">
                                 <div class="fg-line">
-                                    <input class="form-control fg-input" type="text">
+                                    <input class="form-control fg-input"  name="ap" type="text" data-fv-notempty="true" data-fv-message="Requiere Apellido Paterno">
                                 </div>
-                                <label class="fg-label">Input Default</label>
+                                <label class="fg-label">Apellido Paterno</label>
                             </div>
-                            
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group fg-float">
                                 <div class="fg-line">
-                                    <input class="input-lg form-control fg-input" type="text">
+                                    <input class="form-control fg-input"  name="am" type="text" maxlength='10', data-fv-stringlength-message='Ingrese apellido materno'>
                                 </div>
-                                <label class="fg-label">Input Large</label>
-                            </div>
-                            
-                            <br>
-                            <p class="m-b-25 m-t-25 c-black f-500">Input Status - Focused and Disabled</p>
-                            
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="fg-line fg-toggled">
-                                            <input class="form-control" value="This is Focused" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="fg-line disabled">
-                                            <input class="form-control" value="This is Disabled" disabled="" type="text">
-                                        </div>
-                                    </div>
-                                </div> 
+                                <label class="fg-label">Apellido Materno</label>
                             </div>
                         </div>
                     </div>
-	    
-	     <!--  <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title">Modal title</h4>
-	      </div>
-	      <div class="modal-body">
-	        <p>One fine body&hellip;</p>
-	      </div>
-	      --> <div class="modal-footer">
-	        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary waves-effect">Save changes</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-	  
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    <select data-placeholder="n" name="genero" class="form-control" data-fv-notempty='true' data-fv-message="Requiere Género" id="select-genero">
+                                        <option value="">Seleccione Género</option>
+                                        <option value="m">Masculino</option>
+                                        <option value="f">Femenino</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input"  name="direccion" type="text" data-fv-notempty="true" data-fv-message="Requiere Dirección">
+                                </div>
+                                <label class="fg-label">Dirección</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input"  name="email" type="email" data-fv-notempty="true" data-fv-message="Requiere Correo">
+                                </div>
+                                <label class="fg-label">Correo</label>
+                            </div>    
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input"  name="institucion" type="institucion" data-fv-notempty="true" data-fv-message="Requiere Institucion">
+                                </div>
+                                <label class="fg-label">Institucion</label>
+                            </div>    
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <textarea  class="form-control fg-input" id="text-desc" name="descripcion" type="institucion" maxlength="30">                                    
+                                    </textarea>
+                                </div>
+                                <label class="fg-label">Descripcion</label>
+                            </div>    
+                        </div>
+                    </div>
+                    </div>
 
-    <script type="" src="../resources/bower_components/jquery.nicescroll/dist/jquery.nicescroll.js"></script>
-    <script type="" src="../resources/bower_components/autosize/dist/autosize.js"></script>    
-    <script type="" src="../resources/js/tema/js/functions.js"></script>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                            	<label class="col-md-5 control-label">Documentos Presentados</label>
+                            	<div class="col-md-7">
+	                            	#set($cont_doc=0)
+	                            	#foreach($ld in $listaDoc)
+		                            	<div class="checkbox m-b-15">
+			                                <label>
+			                                    <input value="${ld.iddocb}" type="checkbox" name="documentos[]" >
+				                                    <i class="input-helper" ></i>${ld.nombre}
+				                                   	
+			                                </label>
+			                            </div>
+			                            #set($cont_doc=$cont_doc+1)
+	                            	#end
+                            	</div>
+        						<input type="hidden" name="" id="cont_doc" value="${cont_doc}"> 	
+                                <!-- <select multiple="multiple"  data-placeholder="Seleccione documentacion"  name="documentos" data-fv-notempty='true' data-fv-message="Requiere Documentos" data-fv-choice="true" data-fv-choice-min="5" data-fv-choice-max="5" data-fv-choice-message="Selecione todos los documentos" id="select-docuemtos" class="form-control selectpicker"  data-actions-box="true" title="Seleccione los documentos ...">
+                                </select> -->                            
+                            </div>
 
+                        </div>
+                    </div>   
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnAdicionarConfirmacion" class="btn btn-primary waves-effect"> Guardar</button>
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"> Cancelar</button>
+                </div>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</form>  
+
+<script type="" src="../resources/bower_components/jquery.nicescroll/dist/jquery.nicescroll.js"></script>
+<script type="" src="../resources/bower_components/autosize/dist/autosize.js"></script>    
+<script type="" src="../resources/js/tema/js/functions.js"></script>
+<script type="text/javascript"> 
+    // $.post('../RestBeneficiarios/documentosBeneficiario',function(respDoc){
+    //     console.log('listaDoc: ',respDoc)
+    //     $(respDoc).each(function(index,item){
+    //         console.log('index_ckec:',index)
+    //         // $('#select-docuemtos').append('<option value="'+item.iddocb+'">'+item.nombre+'</option>')
+    //         if(index==0){
+    //             $('#ckec-doc').append('<div class=""><label>'+
+    //             '<input type="checkbox" name="languages[]"'+
+    //             'value="'+item.iddocb+'" data-fv-choice="true"'+
+    //             'data-fv-choice-min="2" data-fv-choice-max="4"'+
+    //             'data-fv-choice-message="Please choose 2 - 4 desde formulario"/>'+ item.nombre+'</label></div>')
+    //         }else{
+	   //          $('#ckec-doc').append('<div class=""><label>'+
+	   //          '<input type="checkbox" name="languages[]"'+
+	   //           'value="'+item.iddocb+'" />'+ item.nombre+'</label></div>')
+	                
+    //         }
+    //     })
+    //     //$('#select-docuemtos').chosen();
+    //     // $('#select-docuemtos').selectpicker({
+    //     //   style: 'btn-default',
+    //     //   size: 4//de cuanto en cuanto se mostrar
+    //     // });
+    //     $('#formulario-add').data('formValidation').resetForm(true);
+    // },'json');	
+</script> 
 </body>
-</html>
+</html> 

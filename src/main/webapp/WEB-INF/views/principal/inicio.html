@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <meta name="description" content="">
-	    <meta name="author" content=""> 
-        <title>inicio</title>
-	
-        <link rel="stylesheet" href="../resources/bower_components/bootstrap/dist/css/bootstrap.css">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content=""> 
+	<title>index</title>
+	 <link rel="stylesheet" href="../resources/bower_components/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="../resources/css/tema/app.min.1.css">
         <link rel="stylesheet" href="../resources/css/tema/app.min.2.css">
         <link rel="stylesheet" href="../resources/bower_components/Waves/dist/waves.css">
@@ -17,13 +16,19 @@
         <link rel="stylesheet" href="../resources/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.css">
         <link rel="stylesheet" href="../resources/bower_components/font-awesome/css/font-awesome.css">
         <link rel="stylesheet" href="../resources/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
-        <link rel="stylesheet" href="../resources/bower_components/chosen/chosen.css">
+        <link rel="stylesheet" href="../resources/bower_components/datatables.net-responsive-bs/css/responsive.bootstrap.css">
+        <link rel="stylesheet" href="../resources/bower_components/chosen/chosen.min.css">
+        <link rel="stylesheet" href="../resources/bower_components/chosen-bootstrap/chosen.bootstrap.css">
+        <link rel="stylesheet" href="../resources/bower_components/bootstrap-select/dist/css/bootstrap-select.css">
+        <link rel="stylesheet" href="../resources/bower_components/bootstrap-sweetalert/dist/sweetalert.css">
 		<link rel="stylesheet" href="../resources/css/styles.css">
+		<link rel="stylesheet" href="../resources/css/reloj.css">
 
-    
-    </head>
-    <body class="">  
-      <div id="wrapper">
+</head>
+ <body class="" onload="mueveReloj()"> 
+ 	<div class="baner">
+	</div>	 
+    <div id="wrapper" >
         <!-- Navigation -->
         <nav class="navbar navbar-inverse "  style="margin-bottom: 0">
 
@@ -39,24 +44,17 @@
 			                </button>
 		                	<a class="navbar-brand" href="index.html">PROGRAMA-GNV</a>
 
-							<div class="text-center"  style="width: 461px;">
+							<!-- <div class="text-center"  style="width: 461px;">
 								<img src="img/logo.png"
 									style="width: 60%; height: 45px; margin-left: 3.5em; margin-top: 0.5em"
 									alt="Responsive-image">
-							</div>
+							</div> -->
 							<!--FIN DEL LOGO-->
 						</div>
 					</div>
 					<div class="col-xs-12 col-md-5 text-center fecha">
 						<h3 style="color: orange;font-size: 15px;">
-							<script>
-								var meses = new Array("Enero", "Febrero", "Marzo",
-										"Abril", "Mayo", "Junio", "Julio",
-										"Agosto", "Septiembre", "Octubre",
-										"Noviembre", "Diciembre");
-								var f = new Date();
-								document.write(f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
-							</script>
+							
 						</h3>
 					</div>
 					<div class="col-xs-12 col-md-3">
@@ -64,8 +62,7 @@
 						<div class="row">
 							<div class="col-xs-6 col-md-6" style="margin-top: 8px;">
 								<div class="row">
-<!-- 									<div class="col-md-12 text-center">Usuario Conectado</div> -->
-									<div class="col-md-12 text-center">
+									<div class="col-md-12 text-center" style="margin-left:5px;">
 										<div data-id="${rolPrincipal.getIdrol()}" id="idRolPrincipal"></div>
 										<form class=" " role="search">
 											<select class="tipe form-control" name="roles" id="select-Roles" onchange="GetMenus(this)">	
@@ -75,19 +72,19 @@
 								</div>
 
 							</div>
-							<div class="col-xs-4 col-md-4 text-center" style="margin-top:12px;color: orange;">Conectado</div>	
+							<div class="col-xs-4 col-md-4 text-center" style="margin-top:12px;"><h6 style="color: orange;">Conectado</h6></div>	
 							<div class="col-xs-2 col-md-2 text-center" style="">
 								<div class="row">
 									<div class="">
 										<input value="$usuario.codper" type="hidden" id="cp">
 										<a href="#" class="dropdown-toggle pull-right" style="padding: 0" data-toggle="dropdown" role="button" aria-expanded="false" id="activar">
-<!-- 												#if($usuario.foto) -->
-<!-- 													<img class=" c_foto img-responsive img-circle pull-left" src="img/Usuarios/$usuario.foto" style="width: 50px; height: 50px"> -->
-<!-- 												#else  -->
-<!-- 													<img class=" c_foto img-responsive pull-left" src="img/usuario.gif" style="width: 100px; height: 100px"> -->
-<!-- 												#end  -->
+				<!--#if($usuario.foto) -->
+				<!--<img class=" c_foto img-responsive img-circle pull-left" src="img/Usuarios/$usuario.foto" style="width: 50px; height: 50px"> -->
+				<!--#else  -->
+				<!--<img class=" c_foto img-responsive pull-left" src="img/usuario.gif" style="width: 100px; height: 100px"> -->
+				<!-- #end  -->
 											<img src="../resources/img/contacts/7.jpg" class="img-responsive img-circle pull-left" style="width: 50px;">
-<!-- 										<i class="zmdi zmdi-account zmdi-hc img-circle"></i> -->
+										<!-- <i class="zmdi zmdi-account zmdi-hc img-circle"></i> -->
 										</a>
 										<ul class="dropdown-menu user outDisplay" style="margin-top: 3px;">
 											<li><span class="triangle fa fa-caret-up fa-2x"></span></li>
@@ -130,12 +127,13 @@
 	                    </ul>                    	
 	                </div>
 	            </div>
-	        </div>
+	        </div>	
         </nav>
-			
-        <div id="page-wrapper" >
-            <div class="row"  >
-                <div class="col-md-12" id="contenedor-gestion" style="margin-top: 0px;padding-top: 10px;padding-bottom: 10px">
+		
+        <div id="page-wrapper">
+			<!--aqui habia un row el cual daba un espacion -->
+            <div class="">
+                <div class="col-md-12" id="contenedor-gestion" style="margin-top: 20px;padding-top: 10px;padding-bottom: 10px;margin-bottom: 5em;">
                     
                     contenido
     				<a class="btn btn-danger  waves-effect" id="" >Danger</a> 
@@ -148,10 +146,15 @@
 
 		
     </div>
-	 <div id="cont-modales"></div>
-
-    
- 
+	
+	<div id="cont-modales"></div>
+    <footer class="pie_pag">
+    	<div id="clock">
+		    <p class="date" id="date" ></p>
+		    <strong><p class="time" id="time"></p></strong>
+<!-- 		    <p class="text">RELOJ DIGIAL</p> -->
+		</div>
+    </footer>
     <script type="" src="../resources/bower_components/jquery/dist/jquery.js"></script>
     <script type="" src="../resources/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <!-- <script type="" src="../resources/bower_components/jquery.nicescroll/dist/jquery.nicescroll.js"></script> -->
@@ -163,16 +166,20 @@
     <script type="" src="../resources/bower_components/form.validation/dist/js/language/es_ES.js"></script>
     <script type="" src="../resources/bower_components/datatables.net/js/jquery.dataTables.js"></script>
     <script type="" src="../resources/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
-    <script type="" src="../resources/bower_components/chosen/chosen.jquery.js"></script>
+    <script type="" src="../resources/bower_components/datatables.net-responsive/js/dataTables.responsive.js"></script>
+    <script type="" src="../resources/bower_components/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script type="" src="../resources/bower_components/chosen/chosen.jquery.min.js"></script>
+    <script type="" src="../resources/bower_components/bootstrap-select/js/bootstrap-select.js"></script>
+    <script type="" src="../resources/bower_components/bootstrap-select/js/i18n/defaults-es_ES.js"></script>
+    <script type="" src="../resources/bower_components/bootstrap-sweetalert/dist/sweetalert.js"></script>
+    <script type="" src="../resources/bower_components/jquery-load-json/dist/jquery.loadJSON.min.js"></script>
     
     <script type="" src="../resources/js/tema/js/functions.js"></script>
+<!--     <script type="" src="../resources/js/reloj.js"></script> -->
+    <script type="" src="../resources/js/ajax/GBeneficiarios.js"></script>
+    
     <script type="text/javascript">
-	$(function () {
-		// $("body").niceScroll({
-  //   		cursorcolor: "#061ed4", // change cursor color in hex	
-		// });
-	    // $('select').chosen();
-    })	
+	
 	// $(function () {
 	    Waves.attach('.btn',['waves-button']);
 	    Waves.init();
@@ -191,7 +198,7 @@
 				dataType:"json",
 				cache: false,
 				success:function(resp){
-					// console.log(resp)
+					console.log('Roles: ',resp)
 					idrol1=resp[0].idrol;
 					// return idrol1;
 					// console.log('idrol_Ajax: ',idrol1)
@@ -305,17 +312,19 @@
 			// console.log('idrol: ',idrol,'idmod: ',idmod,'idproc: ',idproc)
 			var enlace=$(link_gest).data('href');
 			// console.log(enlace)
-			$.ajax({
-				type:'post',
-				url:enlace,
-				success:function(resp){
-					$('#contenedor-gestion').html(resp);
-				},
-				error:function(){
-
-				}
-
+			$.post(enlace,function(resp){
+				$('#contenedor-gestion').html(resp);
 			})
+			// $.ajax({
+			// 	type:'post',
+			// 	url:enlace,
+			// 	success:function(resp){
+			// 		$('#contenedor-gestion').html(resp);
+			// 	},
+			// 	error:function(){
+
+			// 	}
+			// })
 			$('#opcionesRol').html('');
 			var OpcionesSistema=new Object();
 			$(ListaMenus).each(function(index,menus){
@@ -329,7 +338,8 @@
 										// console.log('entro acciones')	
 										// console.log('Acciones',opciones.idopc,': ',opciones.nombre);									
 										$('#opcionesRol').append('<button class="btn btn-primary waves-effect" name="">'+opciones.nombre+'</button>')
-										OpcionesSistema.AccionesUser[index2]=opciones.nombre;
+										// OpcionesSistema.AccionesUser[index2]=opciones.nombre;
+										OpcionesSistema.AccionesUser[index2]=opciones;
 									})
 								Get_Opciones(OpcionesSistema);	
 							}
@@ -372,7 +382,38 @@
 
 			})
 		})
+
+
+		
 	// })
     </script>
+	<script>
+	$(function() {
+		
+		// var meses = new Array("Enero", "Febrero", "Marzo","Abril", "Mayo", "Junio", "Julio","Agosto", "Septiembre", "Octubre",
+		var meses = new Array("01", "02", "03","04", "05", "06", "07","08", "09", "10","11", "12");
+		var f = new Date();
+		// document.write(f.getDate() + " de " + meses[f.getMonth()] + " de " + f.getFullYear());
+		var fecha= f.getFullYear()+ "-" + meses[f.getMonth()] + "-" +f.getDate();
+		$("#date").html(fecha);
+		// var hora=f.getHours()+":"+f.getMinutes()+":"+f.getSeconds()+":"+f.getMilliseconds()
+		// $("#time").html(hora);
+
+	})
+
+	function mueveReloj(){
+	    momentoActual = new Date()
+	    hora = momentoActual.getHours()
+	    minuto = momentoActual.getMinutes()
+	    segundo = momentoActual.getSeconds()
+
+	    horaImprimible = hora + ":" + minuto + ":" + segundo
+		$("#time").html(horaImprimible);
+	    // document.form_reloj.reloj.value = horaImprimible
+
+	    setTimeout("mueveReloj()",1000)
+	} 
+	</script>
     </body> 	
+
 </html>

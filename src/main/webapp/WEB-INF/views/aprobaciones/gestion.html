@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>gestion</title>
+
+</head>
+<body>
+
+	<!-- <h2 style="text-align: center;">GESTION BENEFICIARIOS</h2> -->
+	<div class="card z-depth-2">
+		<div class="card-header">
+			<h2 class="panel-title">
+				GESTIÓN APROBACIONES<small>Administre aprobaciones de solcitudes
+					registradas en el Sistema</small>
+			</h2>
+		</div>
+		<div class="panel-body" style="margin-top: -30px">		
+			 <div class="row">   
+                <div class="col-md-3 col-xs-3"></div>
+                <div class="col-md-4 col-xs-4">
+                    <input id="input-solt" class="form-control" placeholder="Ingrese número de Solicitud o cédula del beneficiario" type="" name="">    
+                </div>
+                <div class="col-md-2 col-xs-2 text-center">
+                	<button id="btn-busc" class="btn btn-success waves-effect">Buscar</button>
+                </div>
+                <div class="col-md-3 col-xs-3"></div>       
+             </div>
+             <div class="row">
+                 <div class="col-md-12" id="cont-solt">
+                    <div class="col-md-12 table-responsive">
+                        <table id="table-aprobaciones" class="table table-vmiddle" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"># Solt</th>
+                                    <th class="text-center">fecha</th>
+                                    <th class="text-center">placa</th>
+                                    <th class="text-center">beneficiario</th>
+                                    <th class="text-center">Estado</th>
+                                    <th class="text-center">Aprobado</th>
+                                    <th class="text-center">Opciones</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                     
+                </div>
+             </div>
+		</div>
+	</div>
+	<script type="text/javascript">
+        var result=Get_Opciones(null);
+
+        function ExisteOpcion(opc){
+            // alert('entro comparar')
+            console.log(result)
+            var resultado=false;
+            for (var i = 0; i < result.AccionesUser.length; i++) {
+//                 console.log('for_: ',result.AccionesUser[i]);
+                if(result.AccionesUser[i].codigo==opc){
+                    resultado=true;         
+                }
+            }
+            // console.log('result_dentro:',resultado)              
+            return resultado;
+        }
+
+        // if(ExisteOpcion('adicionar')){
+        //     $('#btn-add').attr({
+        //         onclick:"(Gestionar.Adicionar.modal())",
+        //         // accesskey:""
+        //         })
+        //     $('#btn-add').removeAttr("disabled ").focus().val("Ahora si lo puedes utilizar")
+        // }
+		
+        var campo_busqueda=document.getElementById('input-solt').value
+        listar();
+        $('#btn-busc').on('click',function(resp){
+            campo_busqueda=$('#input-solt').val();
+            listar();
+            // document.getElementById('cont-solt').innerHTML=campo_busqueda
+        })  
+        // console.log('campo_busqueda: ',campo_busqueda)
+        var DTAprobaciones='';
+        function listar(){
+            $.ajax({
+                url:'../RestAprobaciones/listar',
+                type:'post',
+                dataType:'json',
+                data:{
+                    filtro:campo_busqueda
+                },
+                success:function(resp){
+                    console.log('lista_solt: ',resp)
+                    if ($.fn.DataTable.isDataTable('#table-aprobaciones')) {
+                        DTSolicitudes.destroy();
+                        iniciarDatable(resp);       
+                    } else {
+                        iniciarDatable(resp);
+                    }   
+                },
+                error:function(err){
+                    alert('sin respuesta del servidor')
+                }
+            })
+        }
+        function iniciarDatable(lista){
+            DTAprobaciones=$('#table-aprobaciones').DataTable({
+                "oLanguage": {
+                    "sUrl": "../resources/js/dataTables/Spanish.lang"
+                },
+                // responsive:true,
+                "dom":'rt<button>ip',
+                // "ordering":false,
+                "pageLength":5,
+                "scrollCollapse":true,
+                "paging":false
+            })
+        }
+
+
+        
+    </script>
+</body>
+</html>

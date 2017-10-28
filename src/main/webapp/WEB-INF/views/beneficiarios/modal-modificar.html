@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title></title>
+</head>
+<body>
+<form id="formulario-mod" action="../RestBeneficiarios/modificar" method="post" 
+    data-fv-excluded="disabled"
+    data-fv-icon-valid="glyphicon glyphicon-ok"
+    data-fv-icon-invalid="glyphicon glyphicon-remove"
+    data-fv-icon-validating="glyphicon glyphicon-refresh" >
+
+    <div class="modal fade" id="modal-mod" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="display: none;padding-left: 0">
+       <div class="modal-dialog modal-md" role="document">
+         <div class="modal-content">
+            <div class="card">
+                <div class="card-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h2>Modificar Beneficiario<small>Complete el formulario por favor</small></h2>
+                </div>
+                <div class="modal-body">                      
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input" id="cedula" name="ci" type="text"  data-fv-notempty="true" data-fv-message="Requiere Cedula">
+                                </div>
+                                <label class="fg-label">Cédula</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input"  name="nombres" type="text" data-fv-notempty="true" data-fv-message="Requiere Nombres">
+                                </div>
+                                <label class="fg-label">Nombres</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input"  name="ap" type="text" data-fv-notempty="true" data-fv-message="Requiere Apellido Paterno">
+                                </div>
+                                <label class="fg-label">Apellido Paterno</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input"  name="am" type="text" maxlength='10', data-fv-stringlength-message='Ingrese apellido materno'>
+                                </div>
+                                <label class="fg-label">Apellido Materno</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    <select data-placeholder="n" name="genero" class="form-control" data-fv-notempty='true' data-fv-message="Requiere Género" id="select-genero">
+                                        <option value="">Seleccione Género</option>
+                                        <option value="m">Masculino</option>
+                                        <option value="f">Femenino</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input"  name="direccion" type="text" data-fv-notempty="true" data-fv-message="Requiere Dirección">
+                                </div>
+                                <label class="fg-label">Dirección</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input"  name="email" type="email" data-fv-notempty="true" data-fv-message="Requiere Correo">
+                                </div>
+                                <label class="fg-label">Correo</label>
+                            </div>    
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <input class="form-control fg-input"  name="institucion" type="institucion" data-fv-notempty="true" data-fv-message="Requiere Institucion">
+                                </div>
+                                <label class="fg-label">Institucion</label>
+                            </div>    
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group fg-float">
+                                <div class="fg-line">
+                                    <textarea  class="form-control fg-input" id="text-desc" name="descripcion" type="institucion" maxlength="30">                                    
+                                    </textarea>
+                                </div>
+                                <label class="fg-label">Descripcion</label>
+                            </div>    
+                        </div>
+                    </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label">Documentos Presentados</label>
+                                <div class="col-md-7" id="m-ld">
+                                    #set($cont_doc=0)
+                                    #foreach($ld in $listaDoc)
+                                        <div class="checkbox m-b-15">
+                                            <label>
+                                                <input value="${ld.iddocb}" type="checkbox" name="documentos[]" checked="checked">
+                                                    <i class="input-helper" ></i>${ld.nombre}
+                                                    
+                                            </label>
+                                        </div>
+                                        #set($cont_doc=$cont_doc+1)
+                                    #end
+                                </div>
+                                <input type="hidden" name="" id="m_cont_doc" value="${cont_doc}">
+                                <!-- <select multiple="multiple" class="form-control selectpicker" id="select-doc-mod"
+                                    data-fv-notempty='true' 
+                                    data-fv-message="Requiere Documentos" 
+                                    data-fv-choice="true"
+                                    data-fv-choice-min="5"
+                                    data-fv-choice-max="5"
+                                    data-fv-choice-message="Selecione todos los documentos"
+                                    data-actions-box="true" title="Seleccione los documentos ..."
+                                    name="documentos"
+                                 > -->
+                                </select>                            
+                            </div>
+
+                        </div>
+                    </div>   
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnAdicionarConfirmacion" class="btn btn-primary waves-effect"> Guardar</button>
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"> Cancelar</button>
+                </div>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</form>  
+
+<script type="" src="../resources/bower_components/jquery.nicescroll/dist/jquery.nicescroll.js"></script>
+<script type="" src="../resources/bower_components/autosize/dist/autosize.js"></script>    
+<script type="" src="../resources/js/tema/js/functions.js"></script>
+<script type="text/javascript"> 
+</script> 
+</body>
+</html> 

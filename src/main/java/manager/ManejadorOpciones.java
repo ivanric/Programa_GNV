@@ -26,9 +26,7 @@ public class ManejadorOpciones{
 			Opcion o= new Opcion();
 			o.setIdopc(rs.getInt("idopc"));
 			o.setNombre(rs.getString("nombre"));
-			o.setIcono(rs.getString("icono"));
-			o.setEnlace(rs.getString("enlace"));
-			o.setClase(rs.getString("clase"));
+			o.setCodigo(rs.getString("codigo"));
 			o.setEstado(rs.getInt("estado"));
 			return o;
 	    }
