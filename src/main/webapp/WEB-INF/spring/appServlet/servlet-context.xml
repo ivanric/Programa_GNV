@@ -100,6 +100,8 @@
 	<context:component-scan base-package="controller" />
 	<context:component-scan base-package="manager" />
 	<context:component-scan base-package="models" />
+	<context:component-scan base-package="reportes" />
+	<context:component-scan base-package="utilidades" />
 	
 	<!-- 	ESPECIFICANDO TRAFICO DE ARCHIVOS -->
 <!-- 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> </beans:bean> -->

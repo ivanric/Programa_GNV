@@ -76,6 +76,10 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	
+		var campoCedulaGlobal="";
+		var btn_mod_veh_Global;
+	
         var result=Get_Opciones(null);
         // console.log('GESTION_LIST: ',result)
         // console.log('tam: ',result.AccionesUser.length)
@@ -115,6 +119,7 @@
         })
         var DTSolicitudes='';
         function listar(){
+//         	alert('listar')
             $.ajax({
                 url:'../RestSolicitudes/listar',
                 type:'post',
@@ -165,7 +170,7 @@
                     $('td',row).eq(1).html(data.numSolt).addClass('text-center')
                     $('td',row).eq(2).html(data.fecha).addClass('text-center')
                     $('td',row).eq(3).html(data.vehiculo.placa).addClass('text-center')
-                    $('td',row).eq(4).html(data.vehiculo.persona.ap+' '+data.vehiculo.persona.am+' '+data.vehiculo.persona.nombres).addClass('text-center')
+                    $('td',row).eq(4).html(data.persona.ap+' '+data.persona.am+' '+data.persona.nombres).addClass('text-center')
                     if(data.estado==1){
                         $('td',row).eq(5).html('<a type="button" class="" href="#" style="text-align:center"><i class="fa fa-thumbs-o-up"></i></a>').addClass('text-center').addClass('text-center');
                     }else{
@@ -228,7 +233,9 @@
                         success:function(resp){
                             $('#cont-modales').html(resp);
                             // $('#formulario-add').data('formValidation').resetForm(true);
-                            $('#text-desc').val('');                               
+                            $('#text-desc').val('');
+                            $('input[name="idben"]').val('')
+                            campoCedulaGlobal="";                               
                             $('#modal-add').modal('show')
                         },  
                         error:function(err){
@@ -244,8 +251,7 @@
                     console.log('click_selec_ajax: ',click_selec)
                     $('#formulario-add').formValidation({
                     	fields:{
-                            placa:{
-                               
+                            placa:{     
                                 validators:{
                                     callback:{
                                         message:'callback placa',
@@ -253,6 +259,8 @@
                                             // console.log('el valor de la placa:',value)
                                             // console.log(validator)
                                             // console.log($field)
+                                            $("#div-mod-veh").html("").hide();
+                                            var padreNode=$('.dt-veh').parent(); 
                                             if(value=='' || value.indexOf(' ') != -1){
                                                 // alert('vacio')
                                                 // value.replace(/\s/gi,'');                                                
@@ -282,19 +290,69 @@
 
                                             })
                                             if(respPlaca==1){
-                                                $('#mensaje-placa').hide()
-                                                $('.dt-veh').removeAttr('disabled')
+                                                $('#mensaje-placa').hide();
+                                                //$('.dt-veh').removeAttr('disabled')
+                                                $('.dt-veh').attr('disabled','disabled')
+												$('.dt-veh').val('').trigger('chosen:updated');	
                                                 return {
                                                     valid:false,
                                                     message:'esta placa esta en tramite'
                                                 } 
                                             }else if(respPlaca==2){
-                                                $('#mensaje-placa').html('se encontro placa registrada').show()
+                                            //$('#formulario-add').data('formValidation').resetForm(true);
+                                            	$('#mensaje-placa').html('se encontro placa registrada').show()
+                                                var vehiculo;
+                                                $.post('../RestSolicitudes/PlacaDatos',{placa:value},function(resp){
+                                                	vehiculo=resp;
+                                                	console.log('vechiculo: ',vehiculo)
+                                                	padreNode.addClass('fg-toggled');
+                                                	$('#tipv').val(vehiculo.tipoVehiculo.idtipv).trigger('chosen:updated');
+                                                	$('#marv').val(vehiculo.marcaVehiculo.idmarcv).trigger('chosen:updated');
+                                                	$('#modv').val(vehiculo.modeloVehiculo.idmodv).trigger('chosen:updated');
+                                                	$('#tipmv').val(vehiculo.tipoMotor.idtipoMotorVeh).trigger('chosen:updated');
+                                                	$('#tipserv').val(vehiculo.tipoServicio.idTipSv).trigger('chosen:updated');
+                                                	
+                                                	var arrayChosen=[];
+                                                	$(vehiculo.combustibleVehiculo).each(function(index,item){                        		
+                                                		arrayChosen.push(item.idcomb);
+                                                	})
+                                                	console.log('array: ',arrayChosen);
+                                                    //$('#select-comb').chosen('destroy');
+                                                	$('#select-comb').val(arrayChosen);
+                                                	$('#select-comb').trigger('chosen:updated');
+                                                	
+                                                	$('.vehiculo-data').loadJSON(resp)
+                                                })
                                                 $('.dt-veh').attr('disabled','disabled')
+												$('.dt-veh').val('').trigger('chosen:updated');			
+                                                //$('.dt-veh').val(    rec_ben.genero).trigger('chosen:updated');	
+												
+												$("#div-mod-veh").html(`
+													<a class="btn btn-xs bgm-purple href="#"   waves-effect" id="btn_modVehS" disabled="disabled">
+														<span class="zmdi zmdi-edit"> Modificar Vehiculo</span>
+													</a>
+												`).show();
+
+                                                if(ExisteOpcion('mod-veh-solt')){
+                                                    $('#btn_modVehS').attr({
+                                                        onclick:"Gestionar.modificarVehiculo(this)",
+                                                        // accesskey:""
+                                                        })
+                                                    $('#btn_modVehS').removeAttr("disabled ").focus().val("Ahora si lo puedes utilizar")
+                                                }
+
+                                                //$("#div-mod-veh").show()
                                                 return true
                                             }else{
-                                                $('.dt-veh').removeAttr('disabled')
-                                                $('#mensaje-placa').hide()
+                                            	padreNode.removeClass('fg-toggled'); 
+                                            	$('.dt-veh').removeAttr('disabled')
+                                            	
+                                            	$('#mensaje-placa').hide();
+												$(".dt-veh").val($(".dt-veh").find("option:first").val())
+											    $('.dt-veh ').val('').trigger('chosen:updated');
+											    $('.input-veh').val('')
+                                                //$('.dt-veh').val('').trigger('chosen:updated');	
+                                                
                                                 return {
                                                     valid:true,
                                                     message:'esta disponible'
@@ -373,7 +431,11 @@
                             closeOnConfirm: false,   
                             closeOnCancel: false 
                             }, function(isConfirm){   
-                                if (isConfirm) {     
+                                if (isConfirm) {
+                                    //aqui se desavilita los campos del vehiculo
+                                    $('.dt-veh').removeAttr('disabled')
+                                    $('.dt-veh').trigger('chosen:updated');     
+                                    //fin de desavilitacion
                                     $('#formulario-add').ajaxSubmit({
                                         success:function(res){
                                             console.log('registrado',res)
@@ -415,100 +477,12 @@
                 }
                 
             }, 
-            mod:function(a){
-                alert('')
-                var idben=$(a).attr('accesskey');
-                var idper=$(a).data('href');
-                $.ajax({
-                    url:'../Beneficiarios/modal-mod',
-                    type:'post',
-                    success:function(resp){
-                        $('#cont-modales').html(resp);
-                        $.post('../RestBeneficiarios/datos-mod',{idben:idben},function(resp){
-                                console.log('respuestaDatosModificarPost: ',resp)
-                                // resetearFormulario('#formulario-mod');
-                                $('#formulario-mod').data('formValidation').resetForm(true)
-                                $('#formulario-mod').find('.fg-line').addClass('fg-toggled'); 
-                                $('#formulario-mod').loadJSON(resp)
-                                $('#formulario-mod').find('input[name="institucion"]').val(resp.beneficiario.institucion);
-                                $('#formulario-mod').find('textarea[name="descripcion"]').val(resp.beneficiario.descripcion);
-                                var Documentos=resp.beneficiario.documentos;
-                                $(Documentos).each(function(index,data){
-                                    $('#select-doc-mod').append('<option value="'+data.iddocb+'" selected="selected">'+data.nombre+'</option>');
-                                })
-                                $('#select-doc-mod').selectpicker({
-                                  style: 'btn-default',
-                                  size: 4//de cuanto en cuanto se mostrar
-                                });
-                                $('#select-genero').chosen()
-                                $('#modal-mod').modal('show')
-                        },'json')
-                        $('#formulario-mod').formValidation({
-                        }).on('success.form.fv', function(e){
-                           e.preventDefault();
-                           Modificar();
-                        })
-                        function Modificar(){
-                            swal({   
-                                title: "Seguro de modificar Beneficiario?",   
-                                text: "Usted modificara los datos del Beneficiario",   
-                                type: "warning",   
-                                showCancelButton: true,   
-                                confirmButtonColor: "#DD6B55",   
-                                confirmButtonText: "Si, Continuar!",   
-                                cancelButtonText: "No, Cancelar!",   
-                                closeOnConfirm: false,   
-                                closeOnCancel: false 
-                                }, function(isConfirm){   
-                                    if (isConfirm) {     
-                                        $('#formulario-mod').ajaxSubmit({
-                                            data:{
-                                            	idben:idben,
-                                            	idper:idper
-                                            },
-                                        	success:function(res){
-                                                console.log('modificado',res)
-                                                if(res.estado){
-                                                    $.ajax({
-                                                        url:"../Beneficiarios/Gestion",
-                                                        success:function(gestion){
-                                                            $('#contenedor-gestion').html(gestion); 
-                                                            swal({
-                                                                title:"Modificado",
-                                                                text:"Se ha modificado beneficiario exitosamente",
-                                                                type:"success",
-                                                                timer: 2000,   
-                                                                showConfirmButton: false 
-                                                            });
-                                                            $('#modal-mod').modal('hide')
-                                                        }
-                                                    })      
-                                                }
-                                            }
-                                        })
-
-                                    } else {     
-                                        // swal("Cancelled", "Your imaginary file is safe :)", "error");   
-                                        swal({
-                                            title:"Cancelado",
-                                            text:"Se ha cancelado operacion",
-                                            type:"error",
-                                            timer:2000,
-                                            showCancelButton:false,
-                                            showConfirmButton:false
-
-                                        })
-                                        $('#modal-mod').modal('hide')
-                                    } 
-                            });
-                        }
-
-                    
-                    },
-                    error:function(err){
-                        alert('sin respuesta del servidor')
-                    }
-                })    
+            modificarVehiculo:function(a){
+              // alert('modificar el vehiculo') 
+              // $('.dt-veh').parent().removeClass('fg-toggled'); 
+              $('.dt-veh').removeAttr('disabled')
+              $('.dt-veh').trigger('chosen:updated');
+                  
             },
             anular:function(a){
                 var idsolt=$(a).attr('accesskey');

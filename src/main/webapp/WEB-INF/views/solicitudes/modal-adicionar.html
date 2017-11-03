@@ -9,7 +9,7 @@
 <title></title>
 <link rel="stylesheet" href="../resources/css/buscador.css">
 
-</head>
+</head>	
 <body>
 	<form id="formulario-add" action="../RestSolicitudes/adicionar"
 		method="post" data-fv-excluded="disabled"
@@ -64,6 +64,7 @@
 												<input class="form-control fg-input busca" accesskey="0"
 													placeholder=" Buscar beneficiario por nombre, apellidos Û cedula"
 													type="text" id="busca" name="ben" autocomplete="off">
+												
 											</div>
 											<div id="display" class="lista_ben z-depth-3 "
 												style="width: 95%"></div>
@@ -87,13 +88,18 @@
 
 							</div>
 							<fieldset>
-							  <legend>VEHÕCULO</legend>
-							  <div class="vehiculo-data">	
+							  <legend>VEHÕçCULO</legend>
+							  <div class="vehiculo-data">
+							  	<div class="row" >
+							  		<div class="col-md-12">
+							  			<div class="form-group" id="div-mod-veh" style="display: none;"></div>
+							  		</div>
+							  	</div>	
 								<div class="row" >
 									<div class="col-md-2">
 										<div class="form-group fg-float">
 											<div class="fg-line">
-												<input  class="form-control fg-input" id="placa" name="placa" type="text" 	>
+												<input  class="form-control fg-input" id="placa" name="placa" type="text" onclick="resetearPlaca()">
 												<!-- <input class="form-control fg-input" id="placa" name="placa" type="text" data-fv-notempty="true" data-fv-message="Requiere ingresar placa"> -->
 
 											</div>
@@ -104,7 +110,7 @@
 									<div class="col-md-2">
 										<div class="form-group fg-float">
 											<div class="fg-line">
-												<input class="form-control fg-input dt-veh" id="tg"
+												<input class="form-control fg-input dt-veh input-veh" id="tg"
 													name="tjeta_prioridad" type="text" data-fv-notempty="true"
 													data-fv-message="Requiere Targeta de Prioridad">
 											</div>
@@ -114,8 +120,8 @@
 									<div class="col-md-2">
 										<div class="form-group fg-float">
 											<div class="fg-line">
-												<input class="form-control fg-input dt-veh" id="cil"
-													name="cilindrada" type="number" data-fv-notempty="true"
+												<input class="form-control fg-input dt-veh input-veh" id="cil"
+													name="cilindrada" type="text" data-fv-notempty="true"
 													data-fv-message="Requiere Cilindrada">
 											</div>
 											<label class="fg-label">Cilindrada</label>
@@ -124,7 +130,7 @@
 									<div class="col-md-2">
 										<div class="form-group fg-float">
 											<div class="fg-line">
-												<input class="form-control fg-input dt-veh" id="color" name="color"
+												<input class="form-control fg-input dt-veh input-veh" id="color" name="color"
 													type="text" data-fv-notempty="true"
 													data-fv-message="Requiere Color">
 											</div>
@@ -134,7 +140,7 @@
 									<div class="col-md-2">
 										<div class="form-group fg-float">
 											<div class="fg-line">
-												<input class="form-control fg-input dt-veh" id="numC"
+												<input class="form-control fg-input dt-veh input-veh" id="numC"
 													name="num_chasis" type="text" data-fv-notempty="true"
 													data-fv-message="Requiere N˙mero de Chasis">
 											</div>
@@ -144,7 +150,7 @@
 									<div class="col-md-2">
 										<div class="form-group fg-float">
 											<div class="fg-line">
-												<input class="form-control fg-input dt-veh" id="numM"
+												<input class="form-control fg-input dt-veh input-veh" id="numM"
 													name="num_motor" type="text" data-fv-notempty="true"
 													data-fv-message="Requiere N˙mero de Motor">
 											</div>
@@ -156,10 +162,10 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<div class="fg-line">
-												<!-- <label for="">Tipo de VehÌculo</label> -->
+												<!-- <label for="">Tipo de VehÌ≠culo</label> -->
 												<select data-placeholder="n" name="idtipv"
-													class="form-control fg-input sel-opcv dt-veh" data-fv-notempty='true'
-													data-fv-message="Seleccione el Tipo de VehÌculo" id="tipv">
+													class="form-control fg-input sel-opcv dt-veh " data-fv-notempty='true'
+													data-fv-message="Seleccione el Tipo de VehÌ≠culo" id="tipv">
 													<option value="" selected="selected">Tipo Vehiculo</option>
 												</select>
 											</div>
@@ -168,10 +174,10 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<div class="fg-line">
-												<!-- <label for="">Tipo de VehÌculo</label> -->
+												<!-- <label for="">Tipo de VehÌ≠culo</label> -->
 												<select data-placeholder="n" name="idmarcv"
 													class="form-control fg-input sel-opcv dt-veh" data-fv-notempty='true'
-													data-fv-message="Seleccione la marca del VehÌculo"
+													data-fv-message="Seleccione la marca del VehÌ≠culo"
 													id="marv">
 													<option value="" selected="selected">Marca VehÌculo</option>
 												</select>
@@ -181,12 +187,12 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<div class="fg-line">
-												<!-- <label for="">Tipo de VehÌculo</label> -->
+												<!-- <label for="">Tipo de VehÌ≠culo</label> -->
 												<select data-placeholder="n" name="idmodv"
 													class="form-control fg-input sel-opcv dt-veh" data-fv-notempty='true'
-													data-fv-message="Seleccione el modelo del VehÌculo"
+													data-fv-message="Seleccione el modelo del VehÌ≠culo"
 													id="modv">
-													<option value="" selected="selected">Modelo VehÌculo</option>
+													<option value="" selected="selected">Modelo VehÌ≠culo</option>
 												</select>
 											</div>
 										</div>
@@ -197,7 +203,7 @@
 												<!-- <label for="">Tipo de VehÌculo</label> -->
 												<select data-placeholder="n" name="idtipoMotorVeh"
 													class="form-control fg-input sel-opcv dt-veh" data-fv-notempty='true'
-													data-fv-message="Seleccione el tipo de motor del VehÌculo"
+													data-fv-message="Seleccione el tipo de motor del VehÌ≠culo"
 													id="tipmv">
 													<option value="" selected="selected">Tipo Motor VehÌculo</option>
 												</select>
@@ -207,10 +213,10 @@
 									<div class="col-md-3">
 										<div class="form-group">
 											<div class="fg-line">
-												<!-- <label for="">Tipo de VehÌculo</label> -->
+												<!-- <label for="">Tipo de VehÌ≠culo</label> -->
 												<select data-placeholder="n" name="idTipSv"
 													class="form-control fg-input sel-opcv dt-veh" data-fv-notempty='true'
-													data-fv-message="Seleccione el tipo de servicio del VehÌculo"
+													data-fv-message="Seleccione el tipo de servicio del VehÌ≠culo"
 													id="tipserv">
 													<option value="" selected="selected">Tipo de Servicio</option>
 												</select>
@@ -234,10 +240,10 @@
 		                        	<div class="col-md-6">
 			                            <div class="form-group fg-float">
 			                                <div class="fg-line">
-			                                    <textarea  class="form-control fg-input dt-veh" id="text-desc" name="observaciones" type="institucion" maxlength="30">                                    
+			                                    <textarea  class="form-control fg-input " id="text-desc" name="observaciones"  maxlength="200">                                    
 			                                    </textarea>
 			                                </div>
-			                                <label class="fg-label">Descripcion</label>
+			                                <label class="fg-label">Descripcion de Solicitud</label>
 			                            </div>    
 		                        	</div>	
 								</div>
@@ -301,9 +307,9 @@
 					<div class="fg-line">
 						<label for="">GÈnero</label> <select disabled="disabled"
 							data-placeholder="n" name="genero" class="form-control fg-input"
-							data-fv-notempty='true' data-fv-message="Requiere GÔøΩnero"
+							data-fv-notempty='true' data-fv-message="Requiere G√Ø¬ø¬Ωnero"
 							id="select-genero">
-							<option value="">Seleccione GÈnero</option>
+							<option value="">Seleccione G√©nero</option>
 							<option value="m">Masculino</option>
 							<option value="f">Femenino</option>
 						</select>
@@ -316,7 +322,7 @@
 						<label class="fg-label">DirecciÛn</label> <input
 							class="form-control fg-input" disabled="disabled"
 							placeholder="direccion.." name="direccion" type="text"
-							data-fv-notempty="true" data-fv-message="Requiere DirecciÔøΩn">
+							data-fv-notempty="true" data-fv-message="Requiere Direcci√Ø¬ø¬Ωn">
 					</div>
 				</div>
 			</div>
@@ -385,6 +391,9 @@
 		console.log('click_selec: ', click_selec)
 		$(".busca").on('click keyup',function(e) {
     		if (e.type == 'click') {
+    			$('.dt-veh').parent().removeClass('fg-toggled');
+    			 $('#mensaje-placa').hide();
+    			
  				$('#conversion_beneficiario').slideUp(200,function() {
     				$('#contenido-ben').html('')
 		    		$('#formBen').resetForm();
@@ -393,6 +402,7 @@
     			$('input[name="ben"]').val("");
     			var vacio = $('input[name="ben"]').val() == "";
     			if (vacio) {
+    				$("#div-mod-veh").html("").hide();
     				$('#formulario-add').data('formValidation').resetForm(true);
     				$('.sel-opcv').trigger('chosen:updated');
                 	click_selec = 0;
@@ -479,6 +489,7 @@
 			})
 			$('#formulario-add').data('formValidation').resetForm(true);
 			var rec_ben = retornarBeneficiario(JsonListaBen, dato);
+			campoCedulaGlobal=rec_ben.ci;
 			$('input[name="ben"]').val(rec_ben.ci)
 			$('input[name="idben"]').val(rec_ben.beneficiario.idben)
 			console.log('Ben_Recuperado: ',rec_ben)
@@ -547,7 +558,22 @@
             	$('#select-comb').append('<option value="'+item.idcomb+'">'+item.nombre+'</option>')
             })
             $('#select-comb').chosen()
-        })		
+        })
+        
+        function resetearPlaca() {
+	    	$('#formulario-add').data('formValidation').resetForm(true);
+	    	console.log('valor_ben:', campoCedulaGlobal)
+	    	$('input[name="ben"]').val(campoCedulaGlobal);
+	    	// $('.dt-veh').parent().removeClass('fg-toggled');
+	    	$('#mensaje-placa').hide();
+	    	$("#div-mod-veh").html("").hide();
+//  			$('#placa').val('')
+//  			$('#mensaje-placa').hide();
+			$(".dt-veh").val($(".dt-veh").find("option:first").val())
+	    	$('.dt-veh ').val('').trigger('chosen:updated');
+// 	    	$('.input-veh').val('')	
+		}
+        
 	</script>
 </body>
 </html>

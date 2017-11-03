@@ -48,21 +48,10 @@ public class RestSolicitudes {
 	}
 	@RequestMapping({"opcionesVehiculo"})
 	public ResponseEntity<OpcionesVehiculo> opcionesVehiculo(HttpServletRequest req,HttpServletResponse res){
-//		List<?> listaBen=this.manejadorBeneficiarios.Listabenficiario(req);
-//		List<List<?>>lista=new  ArrayList<List<?>>();
+
 		OpcionesVehiculo lista= new OpcionesVehiculo();
 		
-//		List<String>lista1=new ArrayList<String>();
-//		List<String>lista2=new ArrayList<String>();
-//		for (int i = 0; i < 5; i++) {
-//			lista1.add("itemL1"+i);
-//			lista2.add("itemL2"+i);
-//		}
-//		lista1.add("jaja");
-//		lista.add(lista1);
-//		lista.add(lista2);
-//		List<TipoVehiculo>tipoVehiculo=this.manejadorSolicitudes.tipoVehiculo();
-//		lista.add(tipoVehiculo);
+
 		lista.setTipoVehiculo(this.manejadorSolicitudes.tipoVehiculo());
 		lista.setMarcaVehiculo(this.manejadorSolicitudes.marcaVehiculo());
 		lista.setModeloVehiculo(this.manejadorSolicitudes.modeloVehiculo());
@@ -91,11 +80,14 @@ public class RestSolicitudes {
 		mapa.put("estado", existe);
 		return new ResponseEntity<Map<String,Object>>(mapa,HttpStatus.OK);
 	}
-//	@RequestMapping(value="documentosBeneficiario")
-//	public ResponseEntity<List<Documento>> docuemtosBeneficiario(HttpServletRequest req,HttpServletResponse res){	
-//		List<Documento> listaDocumentos=this.manejadorBeneficiarios.listaDocumentos();
-//		return new ResponseEntity<List<Documento>>(listaDocumentos,HttpStatus.OK);
-//	}
+	@RequestMapping({"PlacaDatos"})
+	public ResponseEntity<Vehiculo> DatosVeh(HttpServletRequest req){
+		String placa=req.getParameter("placa");
+		System.out.println("la placa es : "+placa);
+		Vehiculo veh=this.manejadorSolicitudes.DatosVehiculo(placa);
+		return new ResponseEntity<Vehiculo>(veh,HttpStatus.OK);
+	}
+	
 	@Transactional
 	@RequestMapping(value="adicionar")
 	public Map<String, Object> adicionar(HttpServletRequest req,HttpServletResponse res,Solicitud s,Vehiculo v,@RequestParam int [] combustible){
@@ -107,6 +99,7 @@ public class RestSolicitudes {
 		
 		System.out.println("tamanio: "+combustible.length);
 		Map<String, Object> respuesta=new HashMap<String, Object>();
+		
 		for (int i : combustible) {
 			System.out.println("cod_combustible: "+i);
 		}
@@ -114,35 +107,15 @@ public class RestSolicitudes {
 			boolean solicitud=this.manejadorSolicitudes.registrar(req,xuser,v,s,combustible);
 			System.out.println(solicitud);
 			respuesta.put("estado", solicitud);
+//			respuesta.put("estado", true);
 		} catch (Exception e) {
-			// TODO: handle exception
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 			respuesta.put("estado",false);
 		}
-//		respuesta.put("estado", true);
+
 		return respuesta;
 	}
-//	@RequestMapping(value="datos-mod")
-//	public ResponseEntity<Persona> datosMod(HttpServletRequest req){
-//		Persona BeneficiarioDatos=this.manejadorBeneficiarios.datosModificar(req);
-//		return new ResponseEntity<Persona>(BeneficiarioDatos,HttpStatus.OK);		
-//	}
-//	@RequestMapping(value="modificar")
-//	public Map<String, Object> modificar(HttpServletRequest req,HttpServletResponse res,Persona p,@RequestParam String ci,int [] documentos){
-//		Map<String, Object> respuesta=new HashMap<String, Object>();
-//		for (int i : documentos) {
-//			System.out.println("coddocb_modifocado: "+i);
-//		}
-//		try {
-//			boolean consulta=this.manejadorBeneficiarios.modificar(req, p, documentos);
-//			System.out.println(consulta);
-//			respuesta.put("estado", consulta);
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			respuesta.put("estado",false);
-//		}
-//		return respuesta;
-//	}
+
 	@Transactional
 	@RequestMapping(value="anular")
 	public Map<String, Object> anular(HttpServletRequest req,HttpServletResponse res){

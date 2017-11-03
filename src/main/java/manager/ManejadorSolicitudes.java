@@ -55,6 +55,11 @@ private JdbcTemplate db;
 			} catch (Exception e) {
 				s.setVehiculo(null);
 			}
+			try {
+				s.setPersona(metObtenerPersona(rs.getInt("idben")));
+			} catch (Exception e) {
+				s.setPersona(new Persona());
+			}
 			return s;
 	    }
 	}
@@ -100,11 +105,7 @@ private JdbcTemplate db;
 			} catch (Exception e) {
 				v.setModeloVehiculo(null);
 			}
-			try {
-				v.setPersona(metObtenerPersona(rs.getInt("idben")));
-			} catch (Exception e) {
-				v.setPersona(null);
-			}
+
 			return v;
 	    }
 	}
@@ -253,8 +254,11 @@ private JdbcTemplate db;
 	public ModeloVehiculo metModeloVehiculo(int idmodv){
 		return this.db.queryForObject("select * from modeloVehiculo where idmodv=? and estado=1", new objModeloVehiculo(),idmodv);
 	}
+	
+	//cambiar aqui por placa de parametro
 	public Persona metObtenerPersona(int idben){
-		String sql="SELECT p.* FROM persona p JOIN beneficiario b ON b.idper=p.idper JOIN vehiculo v ON v.idben=b.idben and v.idben=?";
+		String sql="SELECT p.* FROM persona p JOIN beneficiario b ON b.idper=p.idper JOIN benveh bv ON bv.idben=b.idben JOIN solicitud s ON s.idben=bv.idben and s.idben=?";
+//		String sql="SELECT p.* FROM persona p JOIN beneficiario b ON b.idper=p.idper and b.idben IN (SELECT idben FROM vehiculo WHERE idben=?)";
 		return this.db.queryForObject(sql,new objPersona(),idben);
 	}
 	//Solicitudes
@@ -345,20 +349,49 @@ private JdbcTemplate db;
 		
 	}
 	
+	public Vehiculo DatosVehiculo(String placa){
+		System.out.println("placa:"+placa);
+		String sql="";
+		try {
+			sql="SELECT * FROM vehiculo WHERE placa=? and estado=0";
+			return  this.db.queryForObject(sql,new objVehiculo(),placa);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			System.out.println("entro catch error");	
+			return null;
+		}
+		
+	}
+	public void BorrarCombustibles(String placa){
+		String sql=" delete from combveh where placa= ?";
+		this.db.update(sql,new Object[]{placa});
+	}
 	public boolean registrar(HttpServletRequest req,Persona xuser,Vehiculo v,Solicitud s,int [] combustible){
 		int idsolt= generarIdSol();
 
 		String sql="";
 		try {
-			sql="INSERT INTO vehiculo(placa,tjeta_prioridad,cilindrada,color,num_motor,num_chasis,idtipv,idmarcv,idben,idTipSv,idtipoMotorVeh,idmodv) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-			this.db.update(sql,v.getPlaca(),v.getTjeta_prioridad(),Integer.parseInt(v.getCilindrada()),v.getColor(),v.getNum_motor(),v.getNum_chasis(),v.getIdtipv(),v.getIdmarcv(),v.getIdben(),v.getIdTipSv(),v.getIdtipoMotorVeh(),v.getIdmodv());
+			if(!verificarPlaca(v.getPlaca())){
+				System.out.println("placa nueva");
+				sql="INSERT INTO vehiculo(placa,tjeta_prioridad,cilindrada,color,num_motor,num_chasis,idtipv,idmarcv,idTipSv,idtipoMotorVeh,idmodv) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+				this.db.update(sql,v.getPlaca(),v.getTjeta_prioridad(),v.getCilindrada(),v.getColor(),v.getNum_motor(),v.getNum_chasis(),v.getIdtipv(),v.getIdmarcv(),v.getIdTipSv(),v.getIdtipoMotorVeh(),v.getIdmodv());	
+			}else{
+				System.out.println("placa existe");
+				sql="UPDATE vehiculo SET tjeta_prioridad=?,cilindrada=?,color=?,num_motor=?,num_chasis=?,idtipv=?,idmarcv=?,idTipSv=?,idtipoMotorVeh=?,idmodv=?,estado=? WHERE placa=?";
+				this.db.update(sql,v.getTjeta_prioridad(),v.getCilindrada(),v.getColor(),v.getNum_motor(),v.getNum_chasis(),v.getIdtipv(),v.getIdmarcv(),v.getIdTipSv(),v.getIdtipoMotorVeh(),v.getIdmodv(),1,v.getPlaca());
+				BorrarCombustibles(v.getPlaca());
+			}
 			sql="INSERT INTO combveh(placa,idcomb) VALUES(?,?)";
 			for (int i = 0; i <combustible.length; i++) {
 				this.db.update(sql,v.getPlaca(),combustible[i]);	
 			}
-			sql="INSERT INTO solicitud(idsolt,numSolt,fechaCreacion,observaciones,placa,login) VALUES(?,?,?,?,?,?)";
-			this.db.update(sql,idsolt,s.getNumSolt(),s.getFecha(),s.getObservaciones(),v.getPlaca(),xuser.getUsuario().getLogin());	
+			sql="insert INTO benveh(placa,idben) VALUES(?,?)";
+			this.db.update(sql,v.getPlaca(),s.getIdben());
 			
+			sql="INSERT INTO solicitud(idsolt,numSolt,fechaCreacion,observaciones,placa,login,idben) VALUES(?,?,?,?,?,?,?)";
+			this.db.update(sql,idsolt,s.getNumSolt(),s.getFecha(),s.getObservaciones(),v.getPlaca(),xuser.getUsuario().getLogin(),s.getIdben());	
+
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception

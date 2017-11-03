@@ -1,18 +1,26 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import manager.ManejadorBeneficiarios;
 import models.Documento;
 import models.Persona;
+
+import utilidades.GeneradorReportes;
+
 @RequestMapping({"/Beneficiarios/"})
 @Controller
 public class ControladorBeneficiarios {
@@ -80,5 +88,27 @@ public class ControladorBeneficiarios {
 		}
 		return "beneficiarios/modal-modificar";
 	}
+	
+	@Autowired
+	DataSource dataSource;
+	@RequestMapping("listaReporte")
+	public  void ListaR(HttpServletResponse res,HttpServletRequest req){
+		String nombreReporte="Lista de Beeneficiarios",tipo="pdf", estado="inline";
+		Persona us=(Persona)req.getSession(true).getAttribute("xusuario");
+		Map<String, Object> parametros=new HashMap<String, Object>();
+		String url="/reportes/reporte1.jasper";	;
+		
+//		parametros.put("codt", codt);
+//		parametros.put("usuario", us.getNombre()+" "+us.getAp()+" "+us.getAm());
+			
+		GeneradorReportes g=new GeneradorReportes();
+		try{
+			g.generarReporte(res, getClass().getResource(url), tipo, parametros, dataSource.getConnection(), nombreReporte, estado);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
+	
+
 	
 }
